@@ -2,26 +2,29 @@
 
 namespace App\Controllers;
 
+use App\Decorators\DiscountDecorator;
 use App\Laravel\Db\Contracts\DbContract;
 use App\Services\Order\Contracts\OrderContract;
 
 final class UserController
 {
   public DbContract $db;
-  public OrderContract $orderService;
+  public OrderContract $OrderBuilder;
 
-  public function __construct(DbContract $db, OrderContract $orderService)
+  public function __construct(DbContract $db, OrderContract $OrderBuilder)
   {
     $this->db = $db;
-    $this->orderService = $orderService;
+    $this->OrderBuilder = $OrderBuilder;
   }
+
   public function index()
   {
     echo 'UserController <br />';
     $this->db->connect();
-    $this->orderService->setProducts(['name' => 'farid']);
-    $this->orderService->setAddress('this is my address');
-    $this->orderService->setPayment('Visacard');
-    // dd($this->orderService);
+    $this->OrderBuilder->setProducts(['name' => 'farid']);
+    $this->OrderBuilder->setAddress('this is my address');
+    $this->OrderBuilder->setPayment('Visacard');
+    $order = new DiscountDecorator($this->OrderBuilder, 10);
+    dd($order->getPrice());
   }
 }

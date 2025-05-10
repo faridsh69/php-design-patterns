@@ -5,7 +5,7 @@ namespace App\Services\Order\Concretes;
 use App\Services\Order\Contracts\OrderContract;
 
 // #3 design pattern Builder
-class OrderConcrete implements OrderContract
+class OrderBuilder implements OrderContract
 {
   protected $products;
   protected $address;
@@ -24,5 +24,10 @@ class OrderConcrete implements OrderContract
   public function setPayment($payment)
   {
     $this->payment = $payment;
+  }
+
+  public function getPrice(): float
+  {
+    return count($this->products) * 100;
   }
 }

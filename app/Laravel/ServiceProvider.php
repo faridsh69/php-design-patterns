@@ -2,11 +2,10 @@
 
 namespace App\Laravel;
 
-use App\Controllers\UserController;
 use App\Laravel\Db\Concretes\DbConcrete;
 use App\Laravel\Db\Contracts\DbContract;
 use App\Laravel\ServiceContainer;
-use App\Services\Order\Concretes\OrderConcrete;
+use App\Services\Order\Concretes\OrderBuilder;
 use App\Services\Order\Contracts\OrderContract;
 
 // #4 design pattern Service provider
@@ -22,7 +21,7 @@ final class ServiceProvider
   public function register()
   {
     $this->serviceContainer->setInstance(DbContract::class, DbConcrete::class, true);
-    $this->serviceContainer->setInstance(OrderContract::class, OrderConcrete::class);
+    $this->serviceContainer->setInstance(OrderContract::class, OrderBuilder::class);
   }
 
   public function boot() {}
