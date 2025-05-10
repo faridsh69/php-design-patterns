@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Services\Db\Contracts\DbContract;
+use App\Laravel\Db\Contracts\DbContract;
 use App\Services\Order\Contracts\OrderContract;
 
 final class UserController
@@ -17,10 +17,11 @@ final class UserController
   }
   public function index()
   {
+    echo 'UserController <br />';
     $this->db->connect();
     $this->orderService->setProducts(['name' => 'farid']);
     $this->orderService->setAddress('this is my address');
     $this->orderService->setPayment('Visacard');
-    dd($this->orderService);
+    // dd($this->orderService);
   }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Db\Concretes;
+namespace App\Laravel\Db\Concretes;
 
-use App\Services\Db\Contracts\DbContract;
+use App\Laravel\Db\Contracts\DbContract;
 use mysqli;
 
 class DbConcrete implements DbContract

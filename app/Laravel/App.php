@@ -2,19 +2,23 @@
 
 namespace App\Laravel;
 
-use App\Controllers\UserController;
-
 final class App
 {
   public static function run()
   {
+    // init container
     $serviceContainer = new ServiceContainer();
 
+    // register services
     $serviceProvider = new ServiceProvider($serviceContainer);
     $serviceProvider->register();
     $serviceProvider->boot();
 
-    $controller = $serviceContainer->getInstance(UserController::class);
+    // check routes to get controller
+    $route = $serviceContainer->getInstance(RouteFactory::class);
+    $controller = $route->getControllerInstance($serviceContainer);
+
+    // run controller
     $controller->index();
   }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Db\Contracts;
+namespace App\Laravel\Db\Contracts;
 
 interface DbContract
 {
