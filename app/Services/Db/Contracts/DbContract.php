@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Simple\Services\DbService\Contracts;
+namespace App\Services\Db\Contracts;
 
 interface DbContract
 {

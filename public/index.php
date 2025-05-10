@@ -2,7 +2,17 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Laravel\ServiceContainer;
+function dd(...$vars)
+{
+  foreach ($vars as $var) {
+    echo "<pre>";
+    var_dump($var);
+    echo "</pre>";
+  }
+  die(1);
+}
 
-$container = new ServiceContainer();
-$container->run();
+use App\Laravel\App;
+
+$app = new App();
+$app->run();

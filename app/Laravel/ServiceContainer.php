@@ -2,36 +2,42 @@
 
 namespace App\Laravel;
 
-use App\Controllers\UserController;
+use Exception;
 use ReflectionClass;
 
+// #1 design pattern Dependency injection 
 final class ServiceContainer
 {
-  public $contractConcretes = [];
-  public $singletons = [];
+  private $contractConcretes = [];
+  // #2 design pattern Singleton 
+  private $singletonInstances = [];
+
+  public function setInstance(string $contract, string $concrete, bool $isSingleton = false)
+  {
+    if (!$isSingleton) {
+      $this->contractConcretes[$contract] = $concrete;
+      return;
+    }
+
+    $this->singletonInstances[$contract] = $this->createInstance($concrete);
+  }
 
   public function getInstance(string $contract)
   {
-    if (isset($this->singletons[$contract])) {
-      return $this->singletons[$contract];
+    if (isset($this->singletonInstances[$contract])) {
+      return $this->singletonInstances[$contract];
     }
 
-    $concrete = isset($this->contractConcretes[$contract]) ? $this->contractConcretes[$contract] : $contract;
-    $instance = $this->createInstance($concrete);
+    if (isset($this->contractConcretes[$contract])) {
+      $concrete = $this->contractConcretes[$contract];
+    } else {
+      $concrete = $contract;
+    }
 
-
-    return $instance;
+    return $this->createInstance($concrete);
   }
 
-  public function setInstance(string $contract, string $concrete)
-  {
-    // $instance = $this->createInstance($concrete);
-
-    $this->contractConcretes[$contract] = $concrete;
-    // $this->contractConcretes[$contract] = compact('concrete');
-  }
-
-  public function createInstance(string $concrete)
+  private function createInstance(string $concrete)
   {
     $reflection = new ReflectionClass($concrete);
 
@@ -52,41 +58,5 @@ final class ServiceContainer
     }
 
     return $reflection->newInstanceArgs($dependencies);
-  }
-
-  public function run()
-  {
-    $this->setInstance(ServiceProvider::class, ServiceProvider::class);
-
-    $serviceProvider = $this->getInstance(ServiceProvider::class);
-    $serviceProvider->register();
-    $serviceProvider->boot();
-
-    $controller = $this->getInstance(UserController::class);
-    $controller->index();
-
-    // 1 routes => factory
-    // 2 db => singleton
-    // 3 order => builder
-    // 4 Auth => facades
-    // 5 logger=> decorator + pipeline
-    // 6 even listener => observable
-    // 7 create command line => 
-
-    // adaptor, proxy, bridge, strategy
-    // state, command, mediator
-
-    //     $container->setInstance(DbContract::class, DbConcrete::class);
-    // $container->setInstance(SampleContract::class, SampleConcrete::class);
-
-    // $db = $container->getInstance(DbContract::class);
-    // $sample = $container->getInstance(SampleContract::class);
-    // $sample->init();
-
-    // $db->connect();
-
-
-    // echo " -- Log generated.\n";
-
   }
 }
