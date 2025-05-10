@@ -23,6 +23,4 @@ final class ServiceProvider
     $this->serviceContainer->setInstance(DbContract::class, DbConcrete::class, true);
     $this->serviceContainer->setInstance(OrderContract::class, OrderBuilder::class);
   }
-
-  public function boot() {}
 }

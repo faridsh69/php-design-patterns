@@ -5,7 +5,7 @@ namespace App\Laravel\Db\Concretes;
 use App\Laravel\Db\Contracts\DbContract;
 use mysqli;
 
-class DbConcrete implements DbContract
+final class DbConcrete implements DbContract
 {
   public $testSingleton;
 

@@ -9,6 +9,7 @@ use ReflectionClass;
 final class ServiceContainer
 {
   private $contractConcretes = [];
+
   // #2 design pattern Singleton 
   private $singletonInstances = [];
 

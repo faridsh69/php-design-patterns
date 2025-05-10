@@ -3,21 +3,15 @@
 namespace App\Decorators;
 
 use App\Services\Order\Concretes\OrderBuilder;
+use App\Services\Order\Decorators\OrderDecorator;
 
 // #6 design pattern Decorator
-final class DiscountDecorator
+final class DiscountDecorator extends OrderDecorator
 {
-  protected OrderBuilder $order;
-  protected float $discount = 0;
-
-  public function __construct(OrderBuilder $order, float $discount)
-  {
-    $this->order = $order;
-    $this->discount = $discount;
-  }
+  protected float $discount = 10;
 
   public function getPrice(): float
   {
-    return $this->order->getPrice() - $this->discount;
+    return parent::getPrice() - $this->discount;
   }
 }

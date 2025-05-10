@@ -12,11 +12,10 @@ final class App
     // register services
     $serviceProvider = new ServiceProvider($serviceContainer);
     $serviceProvider->register();
-    $serviceProvider->boot();
 
     // check routes to get controller
-    $route = $serviceContainer->getInstance(RouteFactory::class);
-    $controller = $route->getControllerInstance($serviceContainer);
+    $routeFactory = $serviceContainer->getInstance(RouteFactory::class);
+    $controller = $routeFactory->getControllerInstance($serviceContainer);
 
     // run controller
     $controller->index();
