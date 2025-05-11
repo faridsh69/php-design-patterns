@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
+use App\Laravel\Db\Concretes\Db;
+
 class User
 {
-  public $dbInstance;
+  public Db $db;
 
-  public function __construct($dbInstance)
+  public function __construct(Db $db)
   {
-    $this->dbInstance = $dbInstance;
+    $this->db = $db;
   }
 
   public function get()
   {
     $sql = "SELECT id, name, email FROM users WHERE id='1'";
-    $result = $this->dbInstance->query($sql);
-    // dd($result);
+    $result = $this->db->dbInstance->query($sql);
 
-    return ['name' => 'John Doe'];
+    return $result->fetch_assoc();
   }
 }
