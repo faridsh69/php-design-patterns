@@ -15,7 +15,6 @@ class RouteFactory
 
   public function getControllerInstance(ServiceContainer $serviceContainer)
   {
-    echo '#3 Factory: design pattern Factory for creating controllers based on routes <br />';
     $url = $_GET['route'];
 
     if (!isset(self::$routes[$url])) {

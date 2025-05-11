@@ -1,18 +1,11 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
-
-function dd(...$vars)
-{
-  foreach ($vars as $var) {
-    echo "<pre>";
-    var_dump($var);
-    echo "</pre>";
-  }
-  die(1);
-}
+require __DIR__ . '/../app/Laravel/HelperMethods.php';
 
 use App\Laravel\App;
 
 $app = new App();
-$app->run();
+$result = $app->run();
+
+dd($result);

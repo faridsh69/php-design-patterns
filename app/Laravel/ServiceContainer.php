@@ -24,7 +24,6 @@ final class ServiceContainer
   public function getInstance(string $contract)
   {
     if (isset($this->singletonInstances[$contract])) {
-      echo '#4 Singleton: design pattern Singleton for creating DB service <br />';
       return $this->singletonInstances[$contract];
     }
 

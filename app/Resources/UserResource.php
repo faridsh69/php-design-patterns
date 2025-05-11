@@ -4,12 +4,8 @@ namespace App\Resources;
 
 class UserResource
 {
-  public function toArray()
+  public function toArray($users)
   {
-    return [
-      // 'id' => $this->id,
-      // 'name' => $this->name,
-      // 'email' => $this->email,
-    ];
+    return json_encode($users);
   }
 }
