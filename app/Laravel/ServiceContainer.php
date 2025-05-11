@@ -5,12 +5,10 @@ namespace App\Laravel;
 use Exception;
 use ReflectionClass;
 
-// #1 design pattern Dependency injection 
 final class ServiceContainer
 {
   private $contractConcretes = [];
 
-  // #2 design pattern Singleton 
   private $singletonInstances = [];
 
   public function setInstance(string $contract, string $concrete, bool $isSingleton = false)
@@ -26,6 +24,7 @@ final class ServiceContainer
   public function getInstance(string $contract)
   {
     if (isset($this->singletonInstances[$contract])) {
+      echo '#4 Singleton: design pattern Singleton for creating DB service <br />';
       return $this->singletonInstances[$contract];
     }
 

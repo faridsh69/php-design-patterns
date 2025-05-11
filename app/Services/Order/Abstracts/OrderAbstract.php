@@ -2,9 +2,9 @@
 
 namespace App\Services\Order\Abstracts;
 
-use App\Services\Order\Contracts\OrderContract;
+use App\Services\Order\Contracts\OrderBuilderContract;
 
-abstract class OrderAbstract implements OrderContract
+abstract class OrderAbstract implements OrderBuilderContract
 {
   protected $products;
   protected $address;

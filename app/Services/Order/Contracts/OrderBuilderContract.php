@@ -2,7 +2,7 @@
 
 namespace App\Services\Order\Contracts;
 
-interface OrderContract
+interface OrderBuilderContract
 {
   public function setProducts($products);
   public function setAddress($address);

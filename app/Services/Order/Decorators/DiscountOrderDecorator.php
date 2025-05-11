@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Decorators;
+namespace App\Services\Order\Decorators;
 
-use App\Services\Order\Concretes\OrderBuilder;
 use App\Services\Order\Decorators\OrderDecorator;
 
 // #6 design pattern Decorator
-final class DiscountDecorator extends OrderDecorator
+final class DiscountOrderDecorator extends OrderDecorator
 {
   protected float $discount = 10;
 

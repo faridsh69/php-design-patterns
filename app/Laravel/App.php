@@ -6,7 +6,7 @@ final class App
 {
   public static function run()
   {
-    // init container
+    echo '#1 Dependency injection: using service container <br />';
     $serviceContainer = new ServiceContainer();
 
     // register services

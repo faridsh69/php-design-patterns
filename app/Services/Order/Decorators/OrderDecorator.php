@@ -3,13 +3,13 @@
 namespace App\Services\Order\Decorators;
 
 use App\Services\Order\Abstracts\OrderAbstract;
-use App\Services\Order\Contracts\OrderContract;
+use App\Services\Order\Contracts\OrderBuilderContract;
 
-class OrderDecorator extends OrderAbstract implements OrderContract
+class OrderDecorator extends OrderAbstract implements OrderBuilderContract
 {
   protected $order;
 
-  public function __construct(OrderContract $order)
+  public function __construct(OrderBuilderContract $order)
   {
     $this->order = $order;
   }

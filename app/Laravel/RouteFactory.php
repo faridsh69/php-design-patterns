@@ -6,7 +6,6 @@ use App\Controllers\ProductController;
 use App\Controllers\UserController;
 use Exception;
 
-// #5 design pattern Factory
 class RouteFactory
 {
   public static $routes = [
@@ -16,6 +15,7 @@ class RouteFactory
 
   public function getControllerInstance(ServiceContainer $serviceContainer)
   {
+    echo '#3 Factory: design pattern Factory for creating controllers based on routes <br />';
     $url = $_GET['route'];
 
     if (!isset(self::$routes[$url])) {
