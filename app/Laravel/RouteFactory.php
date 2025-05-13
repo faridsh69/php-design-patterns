@@ -8,6 +8,7 @@ use Exception;
 
 class RouteFactory
 {
+  // We should extract it to out of laravel folder scope
   public static $routes = [
     'user' => UserController::class,
     'product' => ProductController::class,

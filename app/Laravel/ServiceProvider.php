@@ -4,6 +4,7 @@ namespace App\Laravel;
 
 use App\Laravel\Db\Concretes\Db;
 use App\Laravel\Db\Contracts\DbContract;
+use App\Laravel\EventListner\EventDispatcher;
 use App\Laravel\ServiceContainer;
 use App\Services\Order\Concretes\OrderBuilder;
 use App\Services\Order\Contracts\OrderBuilderContract;
@@ -26,10 +27,14 @@ final class ServiceProvider
   {
     $this->serviceContainer->setInstance(UserServiceContract::class, UserService::class);
     $this->serviceContainer->setInstance(OrderBuilderContract::class, OrderBuilder::class);
+
     echo '#3 Singleton: for creating only one instance of DB to have only 1 time connecting to DB <br />';
+    // Same we need singleton for config, also for event listener
     $this->serviceContainer->setInstance(Config::class, Config::class, true);
     $this->serviceContainer->setInstance(DbContract::class, Db::class, true);
+    $this->serviceContainer->setInstance(EventDispatcher::class, EventDispatcher::class, true);
 
+    // #11 Strategy pattern: this is payment strategy
     $pay = isset($_GET['pay']) ? $_GET['pay'] : 'paypal';
     if ($pay === 'paypal') {
       $this->serviceContainer->setInstance(PaymentContract::class, PaymentPaypal::class);

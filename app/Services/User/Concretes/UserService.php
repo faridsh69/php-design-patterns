@@ -2,6 +2,8 @@
 
 namespace App\Services\User\Concretes;
 
+use App\Events\UserLogginedEvent;
+use App\Laravel\EventListner\EventDispatcher;
 use App\Repositories\UserRepository;
 use App\Resources\UserResource;
 use App\Services\Order\Contracts\OrderBuilderContract;
@@ -15,17 +17,20 @@ class UserService implements UserServiceContract
   private UserResource $userResource;
   private OrderBuilderContract $orderBuilder;
   private PaymentProcessor $paymentProcessorStrategy;
+  private EventDispatcher $eventDispatcher;
 
   public function __construct(
     UserRepository $userRepository,
     UserResource $userResource,
     OrderBuilderContract $orderBuilder,
-    PaymentProcessor $paymentProcessorStrategy
+    PaymentProcessor $paymentProcessorStrategy,
+    EventDispatcher $eventDispatcher
   ) {
     $this->userRepository = $userRepository;
     $this->userResource = $userResource;
     $this->orderBuilder = $orderBuilder;
     $this->paymentProcessorStrategy = $paymentProcessorStrategy;
+    $this->eventDispatcher = $eventDispatcher;
   }
 
   public function index()
@@ -76,6 +81,9 @@ class UserService implements UserServiceContract
   private function sendNotificationWithEventListner()
   {
     echo '#12 Observer pattern: When  object changes state, all its dependents are notified and updated automatically<br>
-    for example here we will send notification when order is paid => result ';
+    for example here we will send notification when order is paid => result <br />';
+
+    $userLogginedEvent = new UserLogginedEvent('farid');
+    $this->eventDispatcher->dispatch($userLogginedEvent);
   }
 }
