@@ -3,6 +3,7 @@
 namespace App\Services\User\Concretes;
 
 use App\Events\UserLogginedEvent;
+use App\Facades\CacheFacade;
 use App\Laravel\EventListner\EventDispatcher;
 use App\Repositories\UserRepository;
 use App\Resources\UserResource;
@@ -38,13 +39,14 @@ class UserService implements UserServiceContract
     echo '#7 Repository pattern: separates the data access layer (model) from the business logic layer (service)<br />';
     $users = $this->userRepository->all();
 
-    echo '#8 Resource pattern: managing data of a specific type to be in one shape<br />';
+    echo '#8 Resource pattern: managing data of a specific type to be in one shape<br /><br />';
     $response = $this->userResource->toArray($users);
 
     $this->makeOrderWithBuilder();
     $this->addDiscountUsingDecorator();
     $this->doPaymentWithStrategy();
     $this->sendNotificationWithEventListner();
+    $this->cacheUsersWithFacade($users);
 
     return $response;
   }
@@ -75,7 +77,7 @@ class UserService implements UserServiceContract
     for example here we are checking the url param to pay by credit card or paypal => result ';
     $result = $this->paymentProcessorStrategy->checkout(90);
 
-    echo ($result) . '<br>';
+    echo ($result) . '<br><br>';
   }
 
   private function sendNotificationWithEventListner()
@@ -85,5 +87,13 @@ class UserService implements UserServiceContract
 
     $userLogginedEvent = new UserLogginedEvent('farid');
     $this->eventDispatcher->dispatch($userLogginedEvent);
+  }
+
+  private function cacheUsersWithFacade($users)
+  {
+    echo '<br /><br /> #13 Facade pattern: for simplifying complex interactions with a set of classes<br>
+    for example here we will cache all users => result <br />';
+
+    CacheFacade::remember('users', 60, $users);
   }
 }

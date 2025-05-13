@@ -10,6 +10,7 @@ final class App
   {
     echo '#1 Dependency injection: using service container <br />';
     $serviceContainer = new ServiceContainer();
+    $serviceContainer->setServiceContainerInstance($serviceContainer);
 
     echo '#2 Service provider: injecting dependencies to service container with service provider <br />';
     $serviceProvider = new ServiceProvider($serviceContainer);
@@ -18,7 +19,7 @@ final class App
     $eventListener = $serviceContainer->getInstance(EventDispatcher::class);
     $eventListener->boot();
 
-    echo '#4 Factory: for creating controllers based on routes <br />';
+    echo '#4 Factory: for creating controllers based on routes <br /><br />';
     $routeFactory = $serviceContainer->getInstance(RouteFactory::class);
     $controller = $routeFactory->getControllerInstance($serviceContainer);
 

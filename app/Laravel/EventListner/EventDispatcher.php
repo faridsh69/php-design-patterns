@@ -19,10 +19,10 @@ class EventDispatcher
   {
     $eventClass = get_class($event);
 
-    if (!empty($this->listeners[$eventClass])) {
-      foreach ($this->listeners[$eventClass] as $listener) {
-        $listener->handle($event);
-      }
+    if (empty($this->listeners[$eventClass])) return;
+
+    foreach ($this->listeners[$eventClass] as $listener) {
+      $listener->handle($event);
     }
   }
 

@@ -7,6 +7,8 @@ use ReflectionClass;
 
 final class ServiceContainer
 {
+  protected static $serviceContainerInstance;
+
   private $contractConcretes = [];
 
   private $singletonInstances = [];
@@ -57,5 +59,15 @@ final class ServiceContainer
     }
 
     return $reflection->newInstanceArgs($dependencies);
+  }
+
+  public static function getServiceContainerInstance()
+  {
+    return static::$serviceContainerInstance;
+  }
+
+  public static function setServiceContainerInstance(ServiceContainer $serviceContainerInstance)
+  {
+    static::$serviceContainerInstance = $serviceContainerInstance;
   }
 }
