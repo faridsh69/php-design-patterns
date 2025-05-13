@@ -5,6 +5,7 @@ namespace App\Services\User\Concretes;
 use App\Events\UserLogginedEvent;
 use App\Facades\CacheFacade;
 use App\Laravel\EventListner\EventDispatcher;
+use App\Proxies\ViewUserProfileProxy;
 use App\Repositories\UserRepository;
 use App\Resources\UserResource;
 use App\Services\Order\Contracts\OrderBuilderContract;
@@ -43,10 +44,11 @@ class UserService implements UserServiceContract
     $response = $this->userResource->toArray($users);
 
     $this->makeOrderWithBuilder();
-    $this->addDiscountUsingDecorator();
+    $this->addDiscountWithDecorator();
     $this->doPaymentWithStrategy();
     $this->sendNotificationWithEventListner();
     $this->cacheUsersWithFacade($users);
+    $this->authorizationUsingProxy();
 
     return $response;
   }
@@ -62,7 +64,7 @@ class UserService implements UserServiceContract
     echo $this->orderBuilder->getPrice() . '<br>'; // 100
   }
 
-  private function addDiscountUsingDecorator()
+  private function addDiscountWithDecorator()
   {
     echo ' #10 Decorator pattern: for adding additional behavior to an  object dynamically<br>
     for example here we add discount to order class => with discount ';
@@ -95,5 +97,14 @@ class UserService implements UserServiceContract
     for example here we will cache all users => result <br />';
 
     CacheFacade::remember('users', 60, $users);
+  }
+
+  private function authorizationUsingProxy()
+  {
+    echo '<br /><br /> #14 Proxy pattern: for providing a surrogate or placeholder for another object to control access to it<br>
+    for example here we will check authorization => result <br />';
+
+    $userProfile = new ViewUserProfileProxy();
+    $userProfile->getProfile();
   }
 }
