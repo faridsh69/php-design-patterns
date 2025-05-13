@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Laravel\Db\Concretes\Db;
 use PDO;
 
+/**
+ * @property int $id
+ */
 class User
 {
   public Db $db;

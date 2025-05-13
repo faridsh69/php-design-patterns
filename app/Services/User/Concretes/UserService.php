@@ -34,26 +34,48 @@ class UserService implements UserServiceContract
     $users = $this->userRepository->all();
 
     echo '#8 Resource pattern: managing data of a specific type to be in one shape<br />';
+    $response = $this->userResource->toArray($users);
 
-    $this->getOrderAndPayment();
+    $this->makeOrderWithBuilder();
+    $this->addDiscountUsingDecorator();
+    $this->doPaymentWithStrategy();
+    $this->sendNotificationWithEventListner();
 
-    return $this->userResource->toArray($users);
+    return $response;
   }
 
-  public function getOrderAndPayment()
+  public function makeOrderWithBuilder()
   {
+    echo '#9 Builder pattern: used to construct complex objects step by step<br>
+    for example here we are filling order step by step => price: ';
     $this->orderBuilder->setProducts(['name' => 'farid']);
     $this->orderBuilder->setAddress('this is my address');
     $this->orderBuilder->setPayment('Visacard');
-    $this->orderBuilder->getPrice(); // 100
-    $order = new DiscountOrderDecorator($this->orderBuilder, 10);
-    echo ' #9 Decorator pattern: for adding additional behavior to an  object dynamically<br>
-    for example here we add discount to order class => result ';
-    echo $order->getPrice() . '<br>'; // 90
 
-    $result = $this->paymentProcessorStrategy->checkout(90);
-    echo '#10 Strategy pattern: for defining strategy of payment to inject proper class in service provider<br>
+    echo $this->orderBuilder->getPrice() . '<br>'; // 100
+  }
+
+  private function addDiscountUsingDecorator()
+  {
+    echo ' #10 Decorator pattern: for adding additional behavior to an  object dynamically<br>
+    for example here we add discount to order class => with discount ';
+    $order = new DiscountOrderDecorator($this->orderBuilder, 10);
+
+    echo $order->getPrice() . '<br>'; // 90
+  }
+
+  private function doPaymentWithStrategy()
+  {
+    echo '#11 Strategy pattern: for defining strategy of payment to inject proper class in service provider<br>
     for example here we are checking the url param to pay by credit card or paypal => result ';
-    echo ($result);
+    $result = $this->paymentProcessorStrategy->checkout(90);
+
+    echo ($result) . '<br>';
+  }
+
+  private function sendNotificationWithEventListner()
+  {
+    echo '#12 Observer pattern: When  object changes state, all its dependents are notified and updated automatically<br>
+    for example here we will send notification when order is paid => result ';
   }
 }
