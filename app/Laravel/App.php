@@ -13,11 +13,11 @@ final class App
     $serviceProvider = new ServiceProvider($serviceContainer);
     $serviceProvider->register();
 
-    echo '#3 Factory: for creating controllers based on routes <br />';
+    echo '#4 Factory: for creating controllers based on routes <br />';
     $routeFactory = $serviceContainer->getInstance(RouteFactory::class);
     $controller = $routeFactory->getControllerInstance($serviceContainer);
 
-    echo '#4 MVC: design pattern MVC to controll logic layer with controller, get data from model, pass to view <br />';
+    echo '#5 MVC: design pattern MVC to controll logic layer with controller, get data from model, pass to view <br />';
     return $controller->index();
   }
 }

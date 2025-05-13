@@ -35,13 +35,12 @@ class UserService implements UserServiceContract
 
     echo '#8 Resource pattern: managing data of a specific type to be in one shape<br />';
 
-    // This block of code should be in some where else
-    $this->getOrderAndPay();
+    $this->getOrderAndPayment();
 
     return $this->userResource->toArray($users);
   }
 
-  public function getOrderAndPay()
+  public function getOrderAndPayment()
   {
     $this->orderBuilder->setProducts(['name' => 'farid']);
     $this->orderBuilder->setAddress('this is my address');

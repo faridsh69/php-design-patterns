@@ -26,11 +26,11 @@ final class ServiceProvider
   {
     $this->serviceContainer->setInstance(UserServiceContract::class, UserService::class);
     $this->serviceContainer->setInstance(OrderBuilderContract::class, OrderBuilder::class);
-    echo '#5 Singleton: for creating only one instance of DB to have only 1 time connecting to DB <br />';
+    echo '#3 Singleton: for creating only one instance of DB to have only 1 time connecting to DB <br />';
     $this->serviceContainer->setInstance(Config::class, Config::class, true);
     $this->serviceContainer->setInstance(DbContract::class, Db::class, true);
 
-    $pay = $_GET['pay'];
+    $pay = isset($_GET['pay']) ? $_GET['pay'] : 'paypal';
     if ($pay === 'paypal') {
       $this->serviceContainer->setInstance(PaymentContract::class, PaymentPaypal::class);
     } else {

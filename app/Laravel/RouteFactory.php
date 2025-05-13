@@ -15,7 +15,7 @@ class RouteFactory
 
   public function getControllerInstance(ServiceContainer $serviceContainer)
   {
-    $url = $_GET['route'];
+    $url = isset($_GET['route']) ? $_GET['route'] : 'user';
 
     if (!isset(self::$routes[$url])) {
       throw new Exception('Route not found');

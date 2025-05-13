@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Laravel\Db\Concretes\Db;
+use PDO;
 
 class User
 {
@@ -18,6 +19,7 @@ class User
     $sql = "SELECT id, name, email FROM users WHERE id='1'";
     $result = $this->db->dbInstance->query($sql);
 
-    return $result->fetch_assoc();
+
+    return $result->fetch(PDO::FETCH_ASSOC);
   }
 }
