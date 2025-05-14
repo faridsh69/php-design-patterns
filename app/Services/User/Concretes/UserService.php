@@ -8,6 +8,8 @@ use App\Laravel\EventListner\EventDispatcher;
 use App\Proxies\ViewUserProfileProxy;
 use App\Repositories\UserRepository;
 use App\Resources\UserResource;
+use App\Services\Message\ErrorMessage;
+use App\Services\Message\MailSender;
 use App\Services\Order\Contracts\OrderBuilderContract;
 use App\Services\Order\Decorators\DiscountOrderDecorator;
 use App\Services\Payment\Concretes\PaymentProcessor;
@@ -49,6 +51,7 @@ class UserService implements UserServiceContract
     $this->sendNotificationWithEventListner();
     $this->cacheUsersWithFacade($users);
     $this->authorizationUsingProxy();
+    $this->sendErrorMailUsingBridge();
 
     return $response;
   }
@@ -106,5 +109,17 @@ class UserService implements UserServiceContract
 
     $userProfile = new ViewUserProfileProxy();
     $userProfile->getProfile();
+  }
+
+  private function sendErrorMailUsingBridge()
+  {
+    echo '<br /><br /> #15 Bridge pattern: when we have for example 3 type of pitza, margarita, pepperoni and cheese,
+    and we have 3 cheff: italian, persian and american cheff, then we should not have 9 classes,
+    we can have 3 classes cat1, 3 classes type2 and 1 abstract class bridge<br>
+    for example here we will send error mail => result <br />';
+
+    $mailSender = new MailSender();
+    $mailErrorMessage = new ErrorMessage($mailSender);
+    $mailErrorMessage->send('text');
   }
 }
