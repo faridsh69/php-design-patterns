@@ -13,6 +13,8 @@ use App\Services\Message\MailSender;
 use App\Services\Order\Contracts\OrderBuilderContract;
 use App\Services\Order\Decorators\DiscountOrderDecorator;
 use App\Services\Payment\Concretes\PaymentProcessor;
+use App\Services\Printer\LegacyPrinter;
+use App\Services\Printer\PrinterAdapter;
 use App\Services\User\Contracts\UserServiceContract;
 
 class UserService implements UserServiceContract
@@ -52,6 +54,7 @@ class UserService implements UserServiceContract
     $this->cacheUsersWithFacade($users);
     $this->authorizationUsingProxy();
     $this->sendErrorMailUsingBridge();
+    $this->printInvoice();
 
     return $response;
   }
@@ -104,7 +107,7 @@ class UserService implements UserServiceContract
 
   private function authorizationUsingProxy()
   {
-    echo '<br /><br /> #14 Proxy pattern: for providing a surrogate or placeholder for another object to control access to it<br>
+    echo '<br /><br /> #14 Proxy pattern: for control access to object<br>
     for example here we will check authorization => result <br />';
 
     $userProfile = new ViewUserProfileProxy();
@@ -115,11 +118,21 @@ class UserService implements UserServiceContract
   {
     echo '<br /><br /> #15 Bridge pattern: when we have for example 3 type of pitza, margarita, pepperoni and cheese,
     and we have 3 cheff: italian, persian and american cheff, then we should not have 9 classes,
-    we can have 3 classes cat1, 3 classes type2 and 1 abstract class bridge<br>
+    we can have 3 classes category1, 3 classes category2 and 1 abstract class bridge<br>
     for example here we will send error mail => result <br />';
 
-    $mailSender = new MailSender();
-    $mailErrorMessage = new ErrorMessage($mailSender);
-    $mailErrorMessage->send('text');
+    $mailSender = new MailSender(); // also it can be SmsSender or TelegramSender
+    $mailSenderErrorMessage = new ErrorMessage($mailSender); // also it can be WarningMessage or SuccessMessage
+    $mailSenderErrorMessage->send('text'); // we have MessageAbstract abstract class
+  }
+
+  private function printInvoice()
+  {
+    echo '<br /><br /> #16 adapter pattern: for converting one interface to another interface<br>
+    for example here we will print invoice with legacy printer but with new interface => result <br />';
+
+    $legacyPrinter = new LegacyPrinter();
+    $adaptedPrinter = new PrinterAdapter($legacyPrinter);
+    $adaptedPrinter->modernPrint("Hello Adapter Pattern!, Legacy printer is printing using modernPrint method");
   }
 }
